@@ -1,20 +1,6 @@
 #!/bin/bash
-if [ ! $# -eq 1 ]
-then
-	echo "invalid arg."
-	exit
-fi
-
-if [ $1 = "clean" ]
-then
-	rm *.cookie
-	rm *.txt
-	exit
-fi
-
 grp=$1
 echo "group number=$grp"
-echo $grp > grp_id_is
 
 curl --request POST "http://infolab.ece.udel.edu:8008/VIRLab_UD/login.php" --data "username=wzhong&password=g131517" -c a.cookie
 
@@ -27,16 +13,34 @@ mv tmp eval_crawl.txt
 
 >result.txt
 
+max_click=$2
+cnt=0
+rm -f flag
+
 cat eval_crawl.txt | while read -d $'\n' line
 do
+	if [ $cnt -eq $max_click ] 
+	then
+		touch flag
+		exit	
+	fi
+
 	{
 	col_id=`echo $line | awk '{print $1}'`;
 	fun_id=`echo $line | awk '{print $2}'`;
 	./click.sh ${grp} ${col_id} ${fun_id} && echo "${col_id}_${fun_id} finished" >> result.txt;
 	} &
-	echo "next click..."
-	sleep 19
+
+	let 'cnt+=1'
+	echo "${cnt} clicked..."
+	sleep 2
 done
 
-wait
-echo "please have a cup of tee..." | tee -a result.txt
+if [ -e flag ] 
+then
+	echo "max cnt done."
+	exit 1;
+fi
+
+echo "all done."
+exit 0;
