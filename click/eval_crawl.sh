@@ -35,7 +35,7 @@ do
 	./click.sh ${grp} ${col_id} ${fun_id} && echo "${col_id}_${fun_id} finished" >> result.txt;
 	} &
 	echo "next click..."
-	sleep 15
+	sleep 19
 done
 
 wait
