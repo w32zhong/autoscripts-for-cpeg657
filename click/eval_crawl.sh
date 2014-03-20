@@ -22,6 +22,9 @@ curl --request POST "http://infolab.ece.udel.edu:8008/VIRLab_UD/evaFun.php" --da
 
 sed -i -e "s/'//g" -e "s/,/ /" eval_crawl.txt
 
+cat eval_crawl.txt | sort -R > tmp
+mv tmp eval_crawl.txt
+
 >result.txt
 
 cat eval_crawl.txt | while read -d $'\n' line
@@ -32,7 +35,7 @@ do
 	./click.sh ${grp} ${col_id} ${fun_id} && echo "${col_id}_${fun_id} finished" >> result.txt;
 	} &
 	echo "next click..."
-	sleep 2
+	sleep 15
 done
 
 wait
