@@ -8,6 +8,20 @@ curl --request POST "http://infolab.ece.udel.edu:8008/VIRLab_UD/evaFun.php" --da
 
 sed -i -e "s/'//g" -e "s/,/ /" eval_crawl.txt
 
+################################################
+if [ -n "$3" ]
+then
+	echo "# of doe, robust04, wt2g, ap8889 are:"
+	cat eval_crawl.txt | awk '{print $1}' | uniq
+
+	cat eval_crawl.txt | grep "^${3}" > tmp
+	mv tmp eval_crawl.txt
+
+	echo "collection selected: ${3}"
+	sleep 3
+fi
+################################################
+
 cat eval_crawl.txt | sort -R > tmp
 mv tmp eval_crawl.txt
 
