@@ -5,15 +5,8 @@ then
 	exit
 fi
 
-if [ $1 = "clean" ]
-then
-	rm -f *.cookie *.txt flag
-	sudo killall curl
-	exit
-fi
-
 >result.txt
 
-num=2
+num=40
 ./many_clicks.sh $1 $num && exit
 ./watch.sh $1 $num
