@@ -4,7 +4,7 @@ echo "group number=$grp"
 
 curl --request POST "http://infolab.ece.udel.edu:8008/VIRLab_UD/login.php" --data "username=wzhong&password=g131517" -c a.cookie
 
-curl --request POST "http://infolab.ece.udel.edu:8008/VIRLab_UD/evaFun.php" --data "groupID=${grp}" -b a.cookie | grep "Evaluation</button>" | grep -P "'[0-9]+,[0-9]+'" -o | tee eval_crawl.txt
+curl --request POST "http://infolab.ece.udel.edu:8008/VIRLab_UD/evaFun.php" --data "groupID=${grp}" -b a.cookie | grep "Evaluation</button>" | grep -P "'[0-9]+,[0-9]+'" -o > eval_crawl.txt
 
 sed -i -e "s/'//g" -e "s/,/ /" eval_crawl.txt
 
@@ -42,12 +42,13 @@ do
 	{
 	col_id=`echo $line | awk '{print $1}'`;
 	fun_id=`echo $line | awk '{print $2}'`;
-	./click.sh ${grp} ${col_id} ${fun_id} && echo "${col_id}_${fun_id} finished" >> result.txt;
+	echo ./click.sh ${grp} ${col_id} ${fun_id}
+	./click.sh ${grp} ${col_id} ${fun_id}
 	} &
 
 	let 'cnt+=1'
 	echo "${cnt} clicked..."
-	sleep 2
+	sleep 4
 done
 
 if [ -e flag ] 

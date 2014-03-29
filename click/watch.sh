@@ -4,7 +4,14 @@ s=0
 while true; do
 	echo "watch $s..."
 	let "s+=1"
-	wc -l result.txt | awk "{ exit (\$1 < ${2}) }" && s=0 && ./many_clicks.sh ${1} ${2} ${3} && exit
-	touch result.txt
+	wc -l result.txt | awk "{ exit (\$1 < ${2}) }" && s=0
+
+	if [ $s -eq 0 ]
+	then
+		cat result.txt >> result_save.txt
+		./many_clicks.sh ${1} ${2} ${3}
+		exit
+	fi
+
 	sleep 3
 done

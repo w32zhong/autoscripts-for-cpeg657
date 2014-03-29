@@ -5,8 +5,9 @@ then
 	exit
 fi
 
+>result_save.txt
 >result.txt
 
-num=40
+num=15
 ./many_clicks.sh $1 $num $2 && exit
 ./watch.sh $1 $num $2

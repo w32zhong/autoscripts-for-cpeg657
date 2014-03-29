@@ -7,7 +7,7 @@ fi
 
 if [ $1 = "file" ]
 then
-	rm -f *.cookie *.txt flag
+	rm -f *.cookie *.txt flag *.res
 	exit
 fi
 
