@@ -9,9 +9,11 @@ while true; do
 	if [ $s -eq 0 ]
 	then
 		cat result.txt >> result_save.txt
-		./many_clicks.sh ${1} ${2} ${3}
-		exit
+		./many_clicks.sh ${1} ${2} ${3} && break
 	fi
 
 	sleep 3
 done
+
+cat result.txt >> result_save.txt
+rm result.txt
