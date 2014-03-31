@@ -6,10 +6,11 @@ while true; do
 	let "s+=1"
 	wc -l result.txt | awk "{ exit (\$1 < ${2}) }" && s=0
 
-	if [ $s -eq 0 ]
+	if [ \( $s -eq 0 \) -o \( $s -gt 200 \) ]
 	then
 		cat result.txt >> result_save.txt
-		./many_clicks.sh ${1} ${2} ${3} && break
+		> result.txt
+		./many_clicks.sh ${1} ${2} ${3} # && break
 	fi
 
 	sleep 3
